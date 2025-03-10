@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class BSTree {
 	void destroy(Node* node);
 	void copyTree(Node*& node, const Node* other_node);
 	Node* findMin(Node* node);
+	void getKeys(Node* node, vector<int>& keys) const;
 public:
 	BSTree() : _root(nullptr) {};
 
@@ -34,6 +36,8 @@ public:
 	bool insert(int key);
 	bool contains(int key) const;
 	bool erase(int key);
+
+	vector<int> getKeys() const;
 };
 
 void BSTree::copyTree(Node*& node, const Node* other_node) {
@@ -154,4 +158,44 @@ bool BSTree::erase(Node* &node, int key) {
 
 bool BSTree::erase(int key) {
 	return erase(_root, key);
+}
+
+
+vector<int> unionTree(const BSTree& bst1, const BSTree& bst2) {
+	vector<int> result = bst1.getKeys();
+	vector<int> keys2 = bst2.getKeys();
+
+	for (int key : keys2) {
+		if (!bst1.contains(key)) {
+			result.push_back(key);
+		}
+	}
+
+	return result;
+}
+
+vector<int> intersectionTree(const BSTree& bst1, const BSTree& bst2) {
+	vector<int> keys1 = bst1.getKeys();
+	vector<int> result;
+
+	for (int key : keys1) {
+		if (bst2.contains(key)) {
+			result.push_back(key);
+		}
+	}
+
+	return result;
+}
+
+void BSTree::getKeys(Node* node, vector<int>& keys) const {
+	if (!node) return;
+	getKeys(node->_left, keys);
+	keys.push_back(node->_key);
+	getKeys(node->_right, keys);
+}
+
+vector<int> BSTree::getKeys() const {
+	vector<int> keys;
+	getKeys(_root, keys);
+	return keys;
 }

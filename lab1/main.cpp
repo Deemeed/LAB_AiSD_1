@@ -3,7 +3,32 @@
 
 
 int main() {
-    int sizes[] = { 1000, 10000, 100000 };
+    BSTree bst1, bst2;
+
+    bst1.insert(1);
+    bst1.insert(2);
+    bst1.insert(3);
+    bst2.insert(2);
+    bst2.insert(3);
+    bst2.insert(4);
+
+    vector<int> intersectionRes = intersectionTree(bst1, bst2);
+
+    vector<int> unionRes = unionTree(bst1, bst2);
+
+    std::cout << "Intersection: ";
+    for (int x : intersectionRes) {
+        std::cout << x << ' ';
+    }
+    std::cout << std::endl;
+
+    std::cout << "Union: ";
+    for (int x : unionRes) {
+        std::cout << x << ' ';
+    }
+    std::cout << std::endl;
+
+    /*int sizes[] = {1000, 10000, 100000};
     for (int size : sizes) {
         cout << "Size: " << size << endl;
 
@@ -20,7 +45,7 @@ int main() {
         measureAddRemoveTimeVector(size);
 
         cout << endl;
-    }
+    }*/
 
     return 0;
 }
