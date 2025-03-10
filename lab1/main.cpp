@@ -1,24 +1,26 @@
 #include "BSTree.h"
+#include "tests.h"
+
 
 int main() {
-	BSTree bst;
-	BSTree bst2;
+    int sizes[] = { 1000, 10000, 100000 };
+    for (int size : sizes) {
+        cout << "Size: " << size << endl;
 
-	while (true) {
-		int x;
-		cin >> x;
+        // Измерение времени заполнения
+        measureFillTimeBST(size);
+        measureFillTimeVector(size);
 
-		if (x == 0) break;
+        // Измерение времени поиска
+        measureSearchTimeBST(size);
+        measureSearchTimeVector(size);
 
-		bst.insert(x);
-	}
+        // Измерение времени добавления и удаления
+        measureAddRemoveTimeBST(size);
+        measureAddRemoveTimeVector(size);
 
-	bst.print();
+        cout << endl;
+    }
 
-	bst2 = bst;
-	bst2.insert(10);
-	bst.print();
-	bst2.print();
-
-	return 0;
+    return 0;
 }

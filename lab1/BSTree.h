@@ -16,7 +16,7 @@ struct Node {
 class BSTree {
 	Node* _root;
 
-	bool erase(Node* node, int key);
+	bool erase(Node* &node, int key);
 	bool contains(Node* node, int key) const;
 	bool insert(Node* &node, int key);
 	void print(Node* node) const;
@@ -81,11 +81,13 @@ void BSTree::print() const {
 }
 
 bool BSTree::insert(Node* &node, int key) {
-	if (!node) {
+	if (node == nullptr) {
 		node = new Node(key);
-		return true;
+		return true; // Успешная вставка
 	}
-	if (key == node->_key) return false;
+	if (key == node->_key) {
+		return false; // Ключ уже существует
+	}
 	if (key < node->_key) {
 		return insert(node->_left, key);
 	}
@@ -121,7 +123,7 @@ Node* BSTree::findMin(Node* node) {
 	return node;
 }
 
-bool BSTree::erase(Node* node, int key) {
+bool BSTree::erase(Node* &node, int key) {
 	if (!node) return false;
 	if (key < node->_key) {
 		return erase(node->_left, key);
@@ -134,20 +136,20 @@ bool BSTree::erase(Node* node, int key) {
 			Node* tmp = node->_right;
 			delete node;
 			node = tmp;
+			return true;
 		}
 		else if (!node->_right) {
 			Node* tmp = node->_left;
 			delete node;
 			node = tmp;
+			return true;
 		}
 		else {
 			Node* tmp = findMin(node->_right);
 			node->_key = tmp->_key;
-			return erase(node->_right, node->_key);
+			return erase(node->_right, tmp->_key);
 		}
 	}
-
-	return true;
 }
 
 bool BSTree::erase(int key) {
