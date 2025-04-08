@@ -18,4 +18,42 @@ int main() {
 	cout << (compare(s1, s2, pearson_table) ? "Same" : "Not same");
 
 	return 0;
+
+    /*HashTable<string, string> table(10);
+
+    table.insert("apple", "fruit");
+    table.insert("carrot", "vegetable");
+    table.insert("banana", "fruit");
+    table.insert("dog", "animal");
+
+    cout << "Table:\n";
+    table.print();
+
+    string* result = table.search("carrot");
+    if (result) {
+        cout << "\nFind value for 'carrot': " << *result << endl;
+    }
+    else {
+        cout << "\n'carrot' not found.\n";
+    }
+
+    string newValue = "root vegetable";
+    table.insert_or_assign("carrot", newValue);
+
+    cout << "\nNew value for 'carrot':\n";
+    table.print();
+
+    table.erase("banana");
+    cout << "\nAfter deleting 'banana':\n";
+    table.print();
+
+    int collisionCount = table.count("dog");
+    if (collisionCount != -1) {
+        cout << "\nKey 'dog' insrted with attempt: " << collisionCount << endl;
+    }
+    else {
+        cout << "\nKey 'dog' not found in table\n";
+    }
+
+    return 0;*/
 }

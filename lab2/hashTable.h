@@ -32,7 +32,8 @@ class HashTable {
 	size_t g(K key);
 	size_t hash(K key, size_t i);
 public:
-	HashTable(size_t m, bool flag = false);
+	HashTable(size_t m);
+	HashTable(size_t m, bool flag);
 	HashTable(const HashTable& other);
 	HashTable& operator=(const HashTable& other);
 	~HashTable();
@@ -45,6 +46,11 @@ public:
 	bool erase(K key);
 	int count(K key);
 };
+
+template<typename T, typename K>
+inline HashTable<T, K>::HashTable(size_t m) : capacity(m) {
+	table = new Node<T, K>[capacity];
+}
 
 template<typename T, typename K>
 inline HashTable<T, K>::HashTable(size_t m, bool flag) : capacity(m) {
@@ -168,7 +174,7 @@ template<typename T, typename K>
 inline T* HashTable<T, K>::search(K key) {
 	for (size_t i = 0; i < capacity; ++i) {
 		size_t idx = hash(key, i);
-		if (table[i].active && table[idx]._key == key) {
+		if (table[idx].active && table[idx]._key == key) {
 			return &table[idx]._value;
 		}
 	}
@@ -191,15 +197,14 @@ inline bool HashTable<T, K>::erase(K key) {
 
 template<typename T, typename K>
 inline int HashTable<T, K>::count(K key) {
-	size_t cnt = 0;
-
 	for (size_t i = 0; i < capacity; ++i) {
-		if (table[i].active && table[i]._key == key) {
-			cnt += 1;
+		size_t idx = hash(key, i);
+		if (table[idx].active && table[idx]._key == key) {
+			return static_cast<int>(i);
 		}
 	}
 
-	return cnt;
+	return -1;
 }
 
 
@@ -207,12 +212,12 @@ unsigned char hashPearson(const string& str, HashTable<unsigned char, unsigned c
 	unsigned char h = 0;
 
 	for (char c : str) {
-		unsigned char index = h ^ static_cast<unsigned char>(c);
-		unsigned char* val = table.search(index);
-		if (!val) {
-			throw std::runtime_error("Value not found in Pearson table");
+		unsigned char idx = h ^ static_cast<unsigned char>(c);
+		unsigned char* value = table.search(idx);
+		if (!value) {
+			throw std::runtime_error("Value not found");
 		}
-		h = *val;
+		h = *value;
 	}
 
 	return h;
