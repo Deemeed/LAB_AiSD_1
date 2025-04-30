@@ -3,7 +3,7 @@
 
 
 int main() {
-    BSTree bst1, bst2;
+    /*BSTree bst1, bst2;
 
     bst1.insert(1);
     bst1.insert(2);
@@ -26,9 +26,9 @@ int main() {
     for (int x : unionRes) {
         std::cout << x << ' ';
     }
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 
-    /*int sizes[] = {1000, 10000, 100000};
+    int sizes[] = {1000, 10000, 100000};
     for (int size : sizes) {
         cout << "Size: " << size << endl;
 
@@ -45,7 +45,7 @@ int main() {
         measureAddRemoveTimeVector(size);
 
         cout << endl;
-    }*/
+    }
 
     return 0;
 }

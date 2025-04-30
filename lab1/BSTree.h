@@ -21,9 +21,9 @@ class BSTree {
 	bool contains(Node* node, int key) const;
 	bool insert(Node* &node, int key);
 	void print(Node* node) const;
+
 	void destroy(Node* node);
 	void copyTree(Node*& node, const Node* other_node);
-	Node* findMin(Node* node);
 	void getKeys(Node* node, vector<int>& keys) const;
 public:
 	BSTree() : _root(nullptr) {};
@@ -76,7 +76,7 @@ BSTree::~BSTree() {
 void BSTree::print(Node* node) const {
 	if (!node) return;
 	print(node->_left);
-	cout << node->_key << "\n";
+	cout << node->_key << " ";
 	print(node->_right);
 }
 
@@ -87,10 +87,10 @@ void BSTree::print() const {
 bool BSTree::insert(Node* &node, int key) {
 	if (node == nullptr) {
 		node = new Node(key);
-		return true; // Успешная вставка
+		return true;
 	}
 	if (key == node->_key) {
-		return false; // Ключ уже существует
+		return false;
 	}
 	if (key < node->_key) {
 		return insert(node->_left, key);
@@ -119,14 +119,6 @@ bool BSTree::contains(int key) const {
 	return contains(_root, key);
 }
 
-Node* BSTree::findMin(Node* node) {
-	while (node->_left != nullptr) {
-		node = node->_left;
-	}
-
-	return node;
-}
-
 bool BSTree::erase(Node* &node, int key) {
 	if (!node) return false;
 	if (key < node->_key) {
@@ -149,7 +141,10 @@ bool BSTree::erase(Node* &node, int key) {
 			return true;
 		}
 		else {
-			Node* tmp = findMin(node->_right);
+			Node* tmp = node->_right;
+			while (tmp->_left != nullptr) {
+				tmp = tmp->_left;
+			}
 			node->_key = tmp->_key;
 			return erase(node->_right, tmp->_key);
 		}
