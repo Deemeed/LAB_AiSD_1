@@ -35,7 +35,7 @@ int main() {
     }
 
     auto storage = find_storage(graph);
-    std::cout << "Optimal warehouse location: " << storage << std::endl;
+    std::cout << "Optimal storage location: " << storage << std::endl;
 
     return 0;
 }

@@ -217,6 +217,7 @@ public:
             const auto* edges = _graph.search(current);
             if (edges) {
                 for (const auto& e : *edges) {
+                    if (e.distance < 0) throw std::runtime_error("Distances must be positive");
                     Distance alt = dist[current] + e.distance;
                     if (alt < dist[e.to]) {
                         dist[e.to] = alt;
